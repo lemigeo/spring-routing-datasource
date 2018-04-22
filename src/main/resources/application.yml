@@ -1,0 +1,63 @@
+# application.yml
+
+server:
+  port: 8083
+
+spring:
+  application:
+    name: spring-routing-datasource
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+    - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+  jpa:
+    show-sql: true
+    database: MYSQL
+    properties:
+      hibernate:
+        ddl-auto: none
+        dialect: org.hibernate.dialect.MySQLDialect
+
+datasource:
+  master:
+    jdbc-url: jdbc:mysql://127.0.0.1:3306/master?autoReconnect=true&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: datasource
+    password: datasource
+    minimum-idle: 1
+    maximum-pool-size: 10
+    auto-commit: false
+    connection-test-query: SELECT 1
+  slave:
+    - key: 1
+      hikari:
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/slave?autoReconnect=true&useSSL=false
+        driver-class-name: com.mysql.jdbc.Driver
+        username: datasource
+        password: datasource
+        minimum-idle: 1
+        maximum-pool-size: 10
+        auto-commit: false
+        connection-test-query: SELECT 1
+  shard:
+    - key: 0
+      hikari:
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/shard1?autoReconnect=true&useSSL=false
+        driver-class-name: com.mysql.jdbc.Driver
+        username: datasource
+        password: datasource
+        minimum-idle: 1
+        maximum-pool-size: 10
+        auto-commit: false
+        connection-test-query: SELECT 1
+    - key: 1
+      hikari:
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/shard2?autoReconnect=true&useSSL=false
+        driver-class-name: com.mysql.jdbc.Driver
+        username: datasource
+        password: datasource
+        minimum-idle: 1
+        maximum-pool-size: 10
+        auto-commit: false
+        connection-test-query: SELECT 1
