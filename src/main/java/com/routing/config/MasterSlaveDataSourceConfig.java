@@ -59,7 +59,6 @@ public class MasterSlaveDataSourceConfig {
 		HikariDataSource master = new HikariDataSource(property.getMaster());
 		dataSource.setDefaultTargetDataSource(master);
 		Map<Object, Object> param = new HashMap<Object, Object>();
-		param.put(DatabaseRole.Master, master);
 		for (SlaveConfig config : property.getSlave()) {           
 			HikariDataSource slave = new HikariDataSource(config.getHikari()); 
 			param.put(DatabaseRole.values()[config.getKey()], slave);
